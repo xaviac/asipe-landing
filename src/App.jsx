@@ -5,14 +5,27 @@ import React, { useState } from "react";
 // This file is self‑contained and ready to preview.
 
 const brand = {
+  // light / default logo
   logoPrimary: "/assets/ASIPE.jpg",
+  // dark-mode logo (if you provide a PNG named asipe_dark.png it will be used)
+  logoPrimaryDark: "/assets/asipe_dark.png",
   logoMark: "/assets/asipe-mark.svg",
-  colors: {
-    primary: "#0E4CFF",
-    primaryDark: "#0B3CC9",
-    accent: "#7C3AED",
-    neutral: "#0F172A",
-    light: "#EEF2FF",
+  // color palettes for light and dark themes
+  themes: {
+    light: {
+      primary: "#242752",
+      primaryDark: "#1b1e4b",
+      accent: "#232651",
+      neutral: "#1f224e",
+      light: "#d2d6dd",
+    },
+    dark: {
+      primary: "#0b1228",
+      primaryDark: "#04060b",
+      accent: "#4760ff",
+      neutral: "#e6e9f2",
+      light: "#0f1724",
+    },
   },
 };
 
@@ -112,44 +125,67 @@ export default function Site() {
     setSent(true);
   };
 
-  return (
-    <div
-      className="min-h-screen"
-      style={{
-        background: `linear-gradient(180deg, ${brand.colors.light} 0%, #fff 60%)`,
-        color: brand.colors.neutral,
-      }}
-    >
-      <Header />
-      <main>
-        <Hero />
-        <Trust />
-        <Services />
-        <ValueProps />
-        <Process />
-        <CTA />
-        <Contact form={form} setForm={setForm} onSubmit={onSubmit} sent={sent} />
-        <FAQ />
-        <SocialProof />
-      </main>
-      <Footer />
-    </div>
-  );
+    const [theme, setTheme] = React.useState(() => {
+      try {
+        return localStorage.getItem("asipe-theme") || "light";
+      } catch (e) {
+        return "light";
+      }
+    });
+
+    // Keep brand.colors in sync with the selected theme so existing components
+    // that reference `brand.colors.*` continue to work without changing all call sites.
+    brand.colors = brand.themes[theme];
+
+    React.useEffect(() => {
+      try {
+        localStorage.setItem("asipe-theme", theme);
+      } catch (e) {
+        // ignore
+      }
+    }, [theme]);
+
+    return (
+      <div className={`antialiased ${theme === "dark" ? "bg-slate-900 text-white" : "text-slate-900"}`}>
+        <Header theme={theme} setTheme={setTheme} />
+        <main>
+          <Hero />
+          <Trust />
+          <Services />
+          <ValueProps />
+          <Process />
+          <CTA />
+          <Contact form={form} setForm={setForm} onSubmit={onSubmit} sent={sent} />
+          <FAQ />
+          <SocialProof />
+        </main>
+        <Footer />
+      </div>
+    );
 }
 
-function Header() {
+function Header({ theme, setTheme }) {
+  const logoSrc = theme === "dark" && brand.logoPrimaryDark ? brand.logoPrimaryDark : brand.logoPrimary;
+  const headerBg = theme === "dark" ? "rgba(6,8,12,0.6)" : "rgba(255,255,255,0.75)";
+
   return (
     <header
-      className="sticky top-0 z-40 backdrop-blur border-b border-gray-200"
-      style={{ background: "rgba(255,255,255,0.75)" }}
+      className="sticky top-0 z-40 backdrop-blur border-b"
+      style={{ background: headerBg, borderColor: theme === "dark" ? "rgba(255,255,255,0.06)" : "#E5E7EB" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <Logo />
-          <span
-            className="font-bold text-xl tracking-tight"
-            style={{ color: brand.colors.primary }}
-          >
+        <a href="#" className="flex items-center gap-3">
+          <img
+            src={logoSrc}
+            alt="ASIPE"
+            className="h-9 w-auto object-contain rounded-sm"
+            onError={(e) => {
+              try {
+                e.currentTarget.src = brand.logoPrimary;
+              } catch (err) {}
+            }}
+          />
+          <span className="font-bold text-xl tracking-tight" style={{ color: brand.colors.primary }}>
             ASIPE
           </span>
         </a>
@@ -182,6 +218,24 @@ function Header() {
           >
             WhatsApp
           </a>
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label="Cambiar tema"
+            className="ml-2 inline-flex items-center justify-center h-9 w-9 rounded-full border"
+            style={{ borderColor: brand.colors.light, color: brand.colors.primary, background: "transparent" }}
+            title={theme === "dark" ? "Modo claro" : "Modo oscuro"}
+          >
+            {theme === "dark" ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor" />
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </header>
