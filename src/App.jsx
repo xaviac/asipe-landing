@@ -146,7 +146,10 @@ export default function Site() {
     }, [theme]);
 
     return (
-      <div className={`antialiased ${theme === "dark" ? "bg-slate-900 text-white" : "text-slate-900"}`}>
+      <div
+        className={`antialiased ${theme === "dark" ? "bg-slate-900 text-white" : "text-slate-900"}`}
+        style={{ fontSize: "18px" }}
+      >
         <Header theme={theme} setTheme={setTheme} />
         <main>
           <Hero />
@@ -254,7 +257,7 @@ function Hero() {
             >
               Finanzas claras. Decisiones seguras.
             </h1>
-            <p className="mt-4 text-lg text-gray-700">
+            <p className="mt-4 text-lg" style={{ color: brand.colors.neutral }}>
               En ASIPE acompañamos tu patrimonio con soluciones de inversión, crédito, seguros, ingeniería fiscal y pensiones.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -273,7 +276,7 @@ function Hero() {
                 Habla con un asesor
               </a>
             </div>
-            <div className="mt-6 flex items-center gap-4 text-sm text-gray-600">
+            <div className="mt-6 flex items-center gap-4 text-sm" style={{ color: brand.colors.neutral, opacity: 0.95 }}>
               <span className="inline-flex items-center gap-2">
                 <ShieldIcon /> Regulado y con buenas prácticas
               </span>
@@ -311,7 +314,7 @@ function Stat({ label, value }) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-4 text-center shadow-sm">
       <div className="text-2xl font-bold">{value}</div>
-      <div className="text-xs text-gray-600">{label}</div>
+        <div className="text-xs" style={{ color: brand.colors.neutral, opacity: 0.95 }}>{label}</div>
     </div>
   );
 }
@@ -320,7 +323,7 @@ function Trust() {
   return (
     <section className="py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-sm text-gray-600">Socios de confianza y plataformas líderes</p>
+  <p className="text-center text-sm" style={{ color: brand.colors.neutral, opacity: 0.95 }}>Socios de confianza y plataformas líderes</p>
         <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-80">
           <LogoBadge label="Bancos" />
           <LogoBadge label="Aseguradoras" />
@@ -337,7 +340,7 @@ function Services() {
     <section id="servicios" className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold tracking-tight">Servicios</h2>
-        <p className="mt-3 text-gray-700 max-w-3xl">
+        <p className="mt-3 text-lg max-w-3xl" style={{ color: brand.colors.neutral }}>
           Te ayudamos a comparar, decidir e implementar la solución correcta para tu objetivo financiero.
         </p>
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -350,8 +353,8 @@ function Services() {
                 <ServiceIcon />
                 <h3 className="text-xl font-semibold">{s.title}</h3>
               </div>
-              <p className="mt-2 text-sm text-gray-700">{s.blurb}</p>
-              <ul className="mt-4 space-y-2 text-sm text-gray-700">
+              <p className="mt-2 text-sm" style={{ color: brand.colors.neutral }}>{s.blurb}</p>
+              <ul className="mt-4 space-y-2 text-sm" style={{ color: brand.colors.neutral }}>
                 {s.bullets.map((b, i) => (
                   <li key={i} className="flex gap-2">
                     <CheckIcon /> <span>{b}</span>
@@ -389,8 +392,8 @@ function ValueProps() {
         <div className="grid md:grid-cols-4 gap-6">
           {items.map((it) => (
             <div key={it.title} className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-              <div className="text-lg font-semibold">{it.title}</div>
-              <p className="mt-2 text-sm text-gray-700">{it.desc}</p>
+          <div className="text-lg font-semibold">{it.title}</div>
+            <p className="mt-2 text-sm" style={{ color: brand.colors.neutral }}>{it.desc}</p>
             </div>
           ))}
         </div>
@@ -414,7 +417,7 @@ function Process() {
           {steps.map((st) => (
             <div key={st.title} className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
               <div className="text-lg font-semibold">{st.title}</div>
-              <p className="mt-2 text-sm text-gray-700">{st.desc}</p>
+              <p className="mt-2 text-sm" style={{ color: brand.colors.neutral }}>{st.desc}</p>
             </div>
           ))}
         </div>
@@ -434,7 +437,7 @@ function CTA() {
           <div className="grid md:grid-cols-2 gap-6 items-center">
             <div>
               <h3 className="text-2xl font-bold text-white">Agenda una sesión de diagnóstico sin costo</h3>
-              <p className="mt-2 text-gray-300">15–30 minutos para mapear tu situación y próximos pasos.</p>
+              <p className="mt-2" style={{ color: brand.colors.neutral, opacity: 0.95 }}>15–30 minutos para mapear tu situación y próximos pasos.</p>
             </div>
             <div className="flex md:justify-end gap-3">
               <a
@@ -464,7 +467,7 @@ function Contact({ form, setForm, onSubmit, sent }) {
     <section id="contacto" className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold tracking-tight">Contacto</h2>
-        <p className="mt-3 text-gray-700 max-w-2xl">
+              <p className="mt-3 max-w-2xl" style={{ color: brand.colors.neutral }}>
           Déjanos tus datos y un asesor te contactará. La información se trata con confidencialidad.
         </p>
         <form onSubmit={onSubmit} className="mt-8 grid md:grid-cols-2 gap-6">
@@ -509,7 +512,7 @@ function Contact({ form, setForm, onSubmit, sent }) {
             />
           </div>
           <div className="md:col-span-2 flex items-center justify-between gap-4">
-            <div className="text-xs text-gray-600">
+            <div className="text-xs" style={{ color: brand.colors.neutral, opacity: 0.9 }}>
               Al enviar aceptas nuestro aviso de privacidad y uso de datos para contactarte.
             </div>
             <button
@@ -540,7 +543,7 @@ function FAQ() {
           {faqs.map((f, i) => (
             <div key={i} className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
               <div className="font-semibold">{f.q}</div>
-              <p className="mt-2 text-sm text-gray-700">{f.a}</p>
+                <p className="mt-2 text-sm" style={{ color: brand.colors.neutral }}>{f.a}</p>
             </div>
           ))}
         </div>
@@ -561,7 +564,7 @@ function Footer() {
                 ASIPE
               </span>
             </div>
-            <p className="mt-3 text-sm text-gray-700 max-w-md">
+            <p className="mt-3 text-sm max-w-md" style={{ color: brand.colors.neutral }}>
               Soluciones financieras integrales con transparencia y cumplimiento.
             </p>
           </div>
@@ -602,9 +605,9 @@ function Footer() {
             </p>
           </div>
         </div>
-        <div className="mt-8 text-xs text-gray-500">
-          © {new Date().getFullYear()} ASIPE. Todos los derechos reservados.
-        </div>
+          <div className="mt-8 text-xs" style={{ color: brand.colors.neutral, opacity: 0.85 }}>
+            © {new Date().getFullYear()} ASIPE. Todos los derechos reservados.
+          </div>
       </div>
     </footer>
   );
@@ -632,7 +635,7 @@ function LogoBadge({ label }) {
           <path d="M6 12h12M12 6v12" stroke="currentColor" strokeWidth="1.5" />
         </svg>
       </div>
-      <div className="mt-3 text-xs text-gray-600">{label}</div>
+      <div className="mt-3 text-xs" style={{ color: brand.colors.neutral, opacity: 0.95 }}>{label}</div>
     </div>
   );
 }
@@ -731,8 +734,8 @@ function SocialProof() {
         <div className="mt-10 grid md:grid-cols-3 gap-6">
           {quotes.map((q, i) => (
             <div key={i} className="rounded-3xl border bg-white p-6 shadow-sm" style={{ borderColor: "#E5E7EB" }}>
-              <div className="text-sm text-gray-700">“{q.text}”</div>
-              <div className="mt-4 text-xs text-gray-600">
+              <div className="text-sm" style={{ color: brand.colors.neutral }}>“{q.text}”</div>
+              <div className="mt-4 text-xs" style={{ color: brand.colors.neutral, opacity: 0.9 }}>
                 {q.name} • {q.role}
               </div>
             </div>
